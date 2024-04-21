@@ -1,0 +1,509 @@
+
+<main>
+    <div class="container">
+      {{#each comments}}
+        <section>
+          <div class="comment-box">
+            <div class="comment">
+              <div class="desktop-box">
+                <div class="count desktop-count">
+                  <img src="images/icon-plus.svg" alt="plus">
+                  <span>{{score}}</span>
+                  <img src="images/icon-minus.svg" alt="plus">
+                </div>
+                
+                <div class="content">
+                  <div class="content-head">
+                    <div class="head-left">
+                      <img src= "{{user.image.png}}" alt="avatar">             
+                      <span class="username">
+                        {{user.username}}
+                      </span>
+                      {{#if (eq user.username "juliusomo")}}
+                        <span class="you">
+                          you
+                        </span>
+                      {{/if}}
+                      <span class="createdAt">
+                        {{ createdAt}}
+                      </span>
+                    </div>
+
+                    <div class="head-right">
+                      {{#if (eq user.username "juliusomo")}}
+                          <a class="delete-btn show-delete-comment" href="#" data-id={{_id}}>
+                            <span>
+                              <img src="images/icon-delete.svg" alt="delete">
+                            </span>
+
+                            <span class="delete-txt">Delete</span>
+                          </a>
+
+                          <a class="reply-btn edit" href="#">
+                            <span>
+                              <img src="images/icon-edit.svg" alt="reply">
+                            </span>
+                            <span class="reply-txt">Edit</span>
+                          </a>
+                          {{/if}}
+
+                          {{#if (not_eq user.username "juliusomo")}}
+                          <a class="reply-btn get-reply" href="#">
+                            <span>
+                              <img src="images/icon-reply.svg" alt="reply">
+                            </span>
+                            <span class="reply-txt">Reply</span>
+                          </a>
+                          {{/if}}
+                    </div>
+                  </div>
+
+                  <div class="content-body">
+                    <div class="static-content">
+                      {{ content}}
+                    </div>
+                    {{!-- <form>
+                      <div class="dynamic-content">
+                        {{ content}}
+                      </div>
+                    </form> --}}
+                  </div>
+                </div>
+              </div>
+
+              <div class="mobile-box">
+                <div class="content">
+                  <div class="content-head mobile-head">
+                    <img src= "{{ user.image.png}}" alt="avatar">             
+                    <span class="username">
+                      {{ user.username}}
+                    </span>
+                    {{#if (eq user.username "juliusomo")}}
+                      <span class="you">
+                        you
+                      </span>
+                    {{/if}}
+                    <span class="createdAt">
+                      {{ createdAt}}
+                    </span>
+                  </div>
+
+                  <div class="content-body">
+                    {{ content}}
+                  </div>
+                </div>
+
+                <div class="rate-n-reply">
+                  <div class="count mobile-count">
+                    <img src="images/icon-plus.svg" alt="plus">
+                    <span>{{ score}}</span>
+                    <img src="images/icon-minus.svg" alt="plus">
+                  </div>
+                  
+                  <div class="action-box">
+                    {{#if (eq user.username "juliusomo")}}
+                    <a class="delete-btn show-delete-comment" href="#" data-id={{_id}}>
+                      <span>
+                        <img src="images/icon-delete.svg" alt="delete">
+                      </span>
+
+                      <span class="delete-txt">Delete</span>
+                    </a>
+
+                    <a class="reply-btn edit" href="#">
+                      <span>
+                        <img src="images/icon-edit.svg" alt="reply">
+                      </span>
+                      <span class="reply-txt">Edit</span>
+                    </a>
+                    {{/if}}
+
+                    {{#if (not_eq user.username "juliusomo")}}
+                    <a class="reply-btn get-reply" href="#">
+                      <span>
+                        <img src="images/icon-reply.svg" alt="reply">
+                      </span>
+                      <span class="reply-txt">Reply</span>
+                    </a>
+                    {{/if}}                     
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="reply-form-box hidden">
+              <form id="comment-reply-desktop" class="reply-forms">
+                <div class="add-desktop">
+                  <input type="hidden" value="{{this.user.username}}" name="replyingTo">
+                  <span>
+                      <img src="images/avatars/image-juliusomo.png" alt="avatar">
+                  </span>
+                  <span>
+                    <textarea name="comment" class="add-content-input" placeholder="Add a comment..." required></textarea>
+                  </span>
+                  <span>
+                    <button type="submit" class="send-btn">
+                      REPLY
+                    </button>
+                  </span>
+                </div>
+              </form>
+
+              <form id="comment-reply-mobile" class="reply-forms">
+                <div class="add-mobile">
+                    <input type="hidden" value="{{this.user.username}}" name="replyingTo">
+
+                    <textarea name="comment" class="add-content-input" placeholder="Add a comment..." required></textarea>
+
+                    <div class="send-field">
+                      <img src="images/avatars/image-juliusomo.png" alt="avatar">
+
+                      <button type="submit" class="send-btn">
+                        REPLY
+                      </button>
+                    </div>
+                </div>
+              </form>
+            </div>
+          </div>
+          
+          <div class="reply-box">
+          {{#if replies.length}}
+            {{#each replies}} 
+            <div class="reply-flex">
+              <div class="reply">
+                <div class="desktop-box">
+                    <div class="count desktop-count">
+                      <img src="images/icon-plus.svg" alt="plus">
+                      <span>{{count}}</span>
+                      <img src="images/icon-minus.svg" alt="plus">
+                    </div>
+
+                    <div class="content">
+                      <div class="content-head">
+                        <div class="head-left">
+                          <img src= "{{this.user.image.png}}" alt="avatar">             
+                          <span class="username">
+                            {{this.user.username}}
+                          </span>
+                          {{#if (eq user.username "juliusomo")}}
+                            <span class="you">
+                              you
+                            </span>
+                          {{/if}}
+                          <span class="createdAt">
+                            {{this.createdAt}}
+                          </span>
+                        </div>
+
+                        <div class="head-right">
+                          {{#if (eq user.username "juliusomo")}}
+                          <a class="delete-btn show-delete-reply" href="#" data-id={{_id}}>
+                            <span>
+                              <img src="images/icon-delete.svg" alt="delete">
+                            </span>
+
+                            <span class="delete-txt">Delete</span>
+                          </a>
+
+                          <a class="reply-btn" href="#">
+                            <span>
+                              <img src="images/icon-edit.svg" alt="reply">
+                            </span>
+                            <span class="reply-txt">Edit</span>
+                          </a>
+                          {{/if}}
+
+                          {{#if (not_eq user.username "juliusomo")}}
+                          <a class="reply-btn get-reply get-reply-reply" href="#">
+                            <span>
+                              <img src="images/icon-reply.svg" alt="reply">
+                            </span>
+                            <span class="reply-txt">Reply</span>
+                          </a>
+                          {{/if}}
+                        </div>
+                      </div>
+
+                      <div class="content-body">
+                        <span class="replyingTo">@{{this.replyingTo}} </span>{{ content}}
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="mobile-box">
+                    <div class="content">
+                      <div class="content-head mobile-head">
+                        <img src= "{{user.image.png}}" alt="img">             
+                        <span class="username">
+                          {{ this.user.username}}
+                        </span>
+                        {{#if (eq user.username "juliusomo")}}
+                          <span class="you">
+                            you
+                          </span>
+                        {{/if}}
+                        <span class="createdAt">
+                          {{ this.createdAt}}
+                        </span>
+                      </div>
+
+                      <div class="content-body">
+                        <span class="replyingTo">@{{ this.replyingTo}} </span>{{ content}}
+                      </div>
+                    </div>
+
+                    <div class="rate-n-reply">
+                      <div class="count mobile-count">
+                        <img src="images/icon-plus.svg" alt="plus">
+                        <span>{{ this.count}}</span>
+                        <img src="images/icon-minus.svg" alt="plus">
+                      </div>
+
+                      <div class="action-box">
+                        {{#if (eq user.username "juliusomo")}}
+                        <a class="delete-btn show-delete-reply" href="#" data-id={{_id}}>
+                          <span>
+                            <img src="images/icon-delete.svg" alt="delete">
+                          </span>
+
+                          <span class="delete-txt">Delete</span>
+                        </a>
+
+                        <a class="reply-btn" href="#">
+                          <span>
+                            <img src="images/icon-edit.svg" alt="reply">
+                          </span>
+                          <span class="reply-txt">Edit</span>
+                        </a>
+                        {{/if}}
+
+                        {{#if (not_eq user.username "juliusomo")}}
+                        <a class="reply-btn get-reply-reply" href="#">
+                          <span>
+                            <img src="images/icon-reply.svg" alt="reply">
+                          </span>
+                          <span class="reply-txt">Reply</span>
+                        </a> 
+                        {{/if}}                     
+                      </div>
+                    </div>
+                  </div>
+              </div>
+
+              <div class="reply-form-box reply-reply-field hidden">
+                <form id="reply-reply-desktop" class="reply-forms">
+                  <div class="add-desktop">
+                    <input type="hidden" value="{{this.user.username}}" name="replyingTo">
+
+                    <span>
+                        <img src="images/avatars/image-juliusomo.png" alt="avatar">
+                    </span>
+                    <span>
+                      <textarea name="comment" class="add-content-input" placeholder="Add a comment..." required></textarea>
+                    </span>
+                    <span>
+                      <button type="submit" class="send-btn">
+                        REPLY
+                      </button>
+                    </span>
+                  </div>
+                </form>
+
+                <form id="reply-reply-mobile" class="reply-forms">
+                  <div class="add-mobile">
+                      <input type="hidden" value="{{this.user.username}}" name="replyingTo">
+
+                      <textarea name="comment" class="add-content-input" placeholder="Add a comment..." required></textarea>
+
+                      <div class="send-field">
+                        <img src="images/avatars/image-juliusomo.png" alt="avatar">
+
+                        <button type="submit" class="send-btn">
+                          REPLY
+                        </button>
+                      </div>
+                  </div>
+                </form>
+              </div>
+
+              <div class="replyToReply">
+                {{#if repliesToReply.length}}
+                  {{#each repliesToReply}}
+                    <div class="reply">
+                      <div class="desktop-box">
+                        <div class="count desktop-count">
+                          <img src="images/icon-plus.svg" alt="plus">
+                          <span>{{count}}</span>
+                          <img src="images/icon-minus.svg" alt="plus">
+                        </div>
+
+                        <div class="content">
+                          <div class="content-head">
+                            <div class="head-left">
+                              <img src= "{{this.user.image.png}}" alt="avatar">             
+                              <span class="username">
+                                {{this.user.username}}
+                              </span>
+                              <span class="you">
+                                you
+                              </span>
+                              <span class="createdAt">
+                                {{this.createdAt}}
+                              </span>
+                            </div>
+
+                            <div class="head-right">
+                              <a class="delete-btn show-delete-subreply" href="#" data-id={{_id}}>
+                                <span>
+                                  <img src="images/icon-delete.svg" alt="delete">
+                                </span>
+
+                                <span class="delete-txt">Delete</span>
+                              </a>
+
+                              <a class="reply-btn" href="#">
+                                <span>
+                                  <img src="images/icon-edit.svg" alt="reply">
+                                </span>
+                                <span class="reply-txt">Edit</span>
+                              </a>
+                            </div>
+                          </div>
+
+                          <div class="content-body">
+                            <span class="replyingTo">@{{this.replyingTo}} </span>{{ content}}
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="mobile-box">
+                        <div class="content">
+                          <div class="content-head mobile-head">
+                            <img src= "{{user.image.png}}" alt="img">             
+                            <span class="username">
+                              {{ this.user.username}}
+                            </span>
+                              <span class="you">
+                                you
+                              </span>
+                            <span class="createdAt">
+                              {{ this.createdAt}}
+                            </span>
+                          </div>
+
+                          <div class="content-body">
+                            <span class="replyingTo">@{{ this.replyingTo}} </span>{{ content}}
+                          </div>
+                        </div>
+
+                        <div class="rate-n-reply">
+                          <div class="count mobile-count">
+                            <img src="images/icon-plus.svg" alt="plus">
+                            <span>{{ this.count}}</span>
+                            <img src="images/icon-minus.svg" alt="plus">
+                          </div>
+
+                          <div class="action-box">
+                            <a class="delete-btn show-delete-subreply" href="#" data-id={{_id}}>
+                              <span>
+                                <img src="images/icon-delete.svg" alt="delete">
+                              </span>
+
+                              <span class="delete-txt">Delete</span>
+                            </a>
+
+                            <a class="reply-btn" href="#">
+                              <span>
+                                <img src="images/icon-edit.svg" alt="reply">
+                              </span>
+                              <span class="reply-txt">Edit</span>
+                            </a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  {{/each}}
+                {{/if}}
+              </div>
+            </div>
+            {{/each}}
+          {{/if}}
+          </div>
+        </section>
+      {{/each}}
+
+      <div class="add-comment-box">
+        <form id="add-comment-desktop">
+          <div class="add-desktop">
+            <span>
+                <img src="images/avatars/image-juliusomo.png" alt="avatar">
+            </span>
+            <span>
+              <textarea name="comment" class="add-content-input" placeholder="Add a comment..." required></textarea>
+            </span>
+            <span>
+              <button type="submit" class="send-btn">
+                SEND
+              </button>
+            </span>
+          </div>
+        </form>
+
+        <form id="add-comment-mobile">
+          <div class="add-mobile">
+              <textarea name="comment" class="add-content-input" placeholder="Add a comment..." required></textarea>
+
+              <div class="send-field">
+                <img src="images/avatars/image-juliusomo.png" alt="avatar">
+
+                <button type="submit" class="send-btn">
+                  SEND
+                </button>
+              </div>
+          </div>
+        </form>
+      </div>
+
+      <dialog class="modal comment_modal">
+        <h3>Delete Comment</h3>
+        <br>
+        <p>Are you sure you want to delete this comment? This will delete the comment and can't be undone</p>
+        <br>
+        <div class="modal_action">
+          <button type="button" class="no-cancel close-comment-modal">NO, CANCEL</button>
+          <button type="button" class="delete-comment">YES, DELETE</button>
+        </div>
+      </dialog>
+
+      <dialog class="modal reply_modal">
+        <h3>Delete Reply</h3>
+        <br>
+        <p>Are you sure you want to delete this reply? This will delete the reply and can't be undone</p>
+        <br>
+        <div class="modal_action">
+          <button type="button" class="no-cancel close-reply-modal">NO, CANCEL</button>
+          <button type="button" class="delete-reply">YES, DELETE</button>
+        </div>
+      </dialog>
+
+      <dialog class="modal subreply_modal">
+        <h3>Delete Reply</h3>
+        <br>
+        <p>Are you sure you want to delete this reply? This will delete the reply and can't be undone</p>
+        <br>
+        <div class="modal_action">
+          <button type="button" class="no-cancel close-subreply-modal">NO, CANCEL</button>
+          <button type="button" class="delete-subreply btn">YES, DELETE</button>
+        </div>
+      </dialog>
+
+
+
+    </div>
+</main>
+
+<div class="attribution">
+    Challenge by <a href="https://www.frontendmentor.io?ref=challenge" target="_blank">Frontend Mentor</a>. 
+    Coded by <a href="#">Denzel Kariuki</a>.
+</div>
