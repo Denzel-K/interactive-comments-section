@@ -8,7 +8,7 @@ const commentSchema = new mongoose.Schema({
     createdAt: {
         type: String,
     },
-    score: {
+    count: {
         type: Number,
     },
     user: {

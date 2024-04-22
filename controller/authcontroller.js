@@ -42,11 +42,11 @@ module.exports.home = async (_req, res) => {
 }
 
 module.exports.createComment = async (req, res) => {
-    const { content, createdAt, score, user } = req.body;
+    const { content, createdAt, count, user } = req.body;
     console.log(req.body);
 
     try {
-        const new_comment = await Comment.create({ content, createdAt, score, user });
+        const new_comment = await Comment.create({ content, createdAt, count, user });
         res.status(201).json({new_comment});
     }
     catch (err) {
@@ -55,12 +55,11 @@ module.exports.createComment = async (req, res) => {
 }
 
 module.exports.createReply = async (req, res) => {
-    const { content, createdAt, score, user, replyingTo } = req.body;
-    console.log(req.body);
+    const { content, createdAt, count, user, replyingTo } = req.body;
 
     try {
-        const reply = await Reply.create({ content, createdAt, score, user, replyingTo });
-        res.status(201).json({reply});
+        const results = await Reply.create({ content, createdAt, count, user, replyingTo });
+        res.status(201).json({results});
     }
     catch (err) {
         console.log(err)
@@ -68,16 +67,17 @@ module.exports.createReply = async (req, res) => {
 }
 
 module.exports.replyToReply = async (req, res) => {
-    const { content, createdAt, score, user, replyingTo } = req.body;
-    console.log(req.body);
+    const { content, createdAt, count, user, replyingTo } = req.body;
 
     try {
-        const repliesToReply = await ReplyToReply.create({ content, createdAt, score, user, replyingTo });
-        res.status(201).json({repliesToReply});
+        const results = await ReplyToReply.create({ content, createdAt, count, user, replyingTo });
+
+        res.status(201).json({results});
     }
     catch (err) {
-        console.log(err)
+        console.log(err);
     }
+    
 }
 
 module.exports.deleteComment = async (req, res) => {
@@ -126,4 +126,132 @@ module.exports.deleteSubReply = async (req, res) => {
     .catch(err => {
         res.status(500).send({ message: err.message || "An error occured while deleting the reply" });
     })
+}
+
+module.exports.updateComment = async (req, res) => {
+    const { content, createdAt, score, user } = req.body;
+    const id = req.params.id;
+    
+    try {
+        const commentUpdate = await Comment.findByIdAndUpdate(id, {
+            content,
+            createdAt,
+            score,
+            user
+        },
+        {useFindAndModify: false});
+
+        console.log(commentUpdate);
+
+        res.status(200).json({commentUpdate});
+    }
+    catch(err){
+        console.log(err)
+        res.status(500).send({ message: err.message || "An error occured while updating the comment" });
+    }
+}
+
+module.exports.updateReply = async (req, res) => {
+    const { content, createdAt, score, user, replyingTo } = req.body;
+    const id = req.params.id;
+    
+    try {
+        const replyUpdate = await Reply.findByIdAndUpdate(id, {
+            content,
+            createdAt,
+            score,
+            user,
+            replyingTo
+        },
+        {useFindAndModify: false});
+
+        console.log(replyUpdate);
+
+        res.status(200).json({replyUpdate});
+    }
+    catch(err){
+        console.log(err)
+        res.status(500).send({ message: err.message || "An error occured while updating the reply" });
+    }
+}
+
+module.exports.updateSubReply = async (req, res) => {
+    const { content, createdAt, score, user, replyingTo } = req.body;
+    const id = req.params.id;
+    
+    try {
+        const replyUpdate = await ReplyToReply.findByIdAndUpdate(id, {
+            content,
+            createdAt,
+            score,
+            user,
+            replyingTo
+        },
+        {useFindAndModify: false});
+
+        console.log(replyUpdate);
+
+        res.status(200).json({replyUpdate});
+    }
+    catch(err){
+        console.log(err)
+        res.status(500).send({ message: err.message || "An error occured while updating the reply" });
+    }
+}
+
+module.exports.commentCount = async (req, res) => {
+    const { currentVal } = req.body;
+    const id = req.params.id;
+    
+    try {
+        const countUpdate = await Comment.findByIdAndUpdate(id, {
+            count: currentVal
+        },
+        {useFindAndModify: false});
+
+        //console.log(countUpdate);
+        res.status(200).json({countUpdate});
+    }
+    catch(err){
+        console.log(err)
+        res.status(500).send({ message: err.message || "An error occured while updating the reply" });
+    }
+}
+
+module.exports.replyCount = async (req, res) => {
+    const { currentVal } = req.body;
+    const id = req.params.id;
+    
+    try {
+        const countUpdate = await Reply.findByIdAndUpdate(id, {
+            count: currentVal
+        },
+        {useFindAndModify: false});
+
+        //console.log(countUpdate);
+        res.status(200).json({countUpdate});
+    }
+    catch(err){
+        console.log(err)
+        res.status(500).send({ message: err.message || "An error occured while updating the reply" });
+    }
+}
+
+module.exports.subreplyCount = async (req, res) => {
+    const { currentVal } = req.body;
+    const id = req.params.id;
+    
+    try {
+        const countUpdate = await ReplyToReply.findByIdAndUpdate(id, {
+            count: currentVal
+        },
+        {useFindAndModify: false});
+
+        //console.log(countUpdate);
+        res.status(200).json({countUpdate});
+    }
+    catch(err){
+        console.log(err)
+        res.status(500).send({ message: err.message || "An error occured while updating the reply" });
+    }
 }

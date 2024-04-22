@@ -25,6 +25,6 @@ const replyToReplySchema = new mongoose.Schema({
     }
 })
 
-const ReplyToReply = mongoose.model ('replyToReply', replyToReplySchema);
+const ReplyToReply = mongoose.model ('replytoreplies', replyToReplySchema);
 
 module.exports = ReplyToReply;

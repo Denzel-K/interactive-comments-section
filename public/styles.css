@@ -157,12 +157,28 @@ main {
 .add-desktop img, .add-desktop .add-content-input, .add-desktop button {
     width: 100%;
 }
+textarea {
+    resize: vertical;
+    overflow: hidden;
+}
 .add-desktop textarea {
     height: 100px;
     border: 2px solid var(--Light-gray);
     border-radius: 8px;
     padding: .65rem;
     font-family: 'Rubik', sans-serif;
+    color: var(--Grayish-Blue);
+}
+
+.update_txt {
+    height: 120px;
+    color: var(--Grayish-Blue);
+    width: 100%;
+    border: 2px solid var(--Light-gray);
+    border-radius: 8px;
+    padding: .65rem;
+    font-family: 'Rubik', sans-serif;
+    font-size: 15px;
 }
 
 .send-btn {
@@ -207,7 +223,7 @@ main {
     margin-bottom: 1rem;
 }
 
-#comment-reply-mobile, #reply-reply-mobile {
+.comment-reply-mobile, .reply-reply-mobile {
     display: none;
 }
 .modal {
@@ -233,7 +249,6 @@ main {
     border: none;
     border-radius: 6px;
     color: var(--White);
-    font-size: 16px;
 }
 .modal_action button:nth-child(1){
     background-color: var(--Grayish-Blue);
@@ -246,6 +261,17 @@ main {
     opacity: 0.4;
     min-height: 100vh;
 }
+
+.update-hold {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: end;
+    margin-top: 1rem;
+}
+.get-reply:hover .reply-txt {
+    color: h;
+}
 .hidden {
     display: none;
 }
@@ -253,21 +279,18 @@ main {
 
 @media (max-width: 750px){
     .container {
-        width: 90%;
+        width: 100%;
+        padding: .8rem;
     }
     main {
-        padding: 1.75rem 0;
+        padding: 1.45rem 0;
     }
 }
 
 
 @media (max-width: 600px) {
     body {
-        font-size: 15px;
-    }
-    .container {
-        width: 100%;
-        padding: .8rem;
+        font-size: 14px;
     }
     .desktop-box {
         display: none;
@@ -329,10 +352,10 @@ main {
         margin: 0 0 0 auto;
         padding: 0 0 0 1.4rem;
     }
-    #comment-reply-desktop, #reply-reply-desktop {
+    .comment-reply-desktop, .reply-reply-desktop {
         display: none;
     }
-    #comment-reply-mobile, #reply-reply-mobile {
+    .comment-reply-mobile, .reply-reply-mobile {
         display: block;
     }
     .add-mobile {
@@ -349,6 +372,7 @@ main {
         padding: .65rem;
         height: 90px;
         font-family: 'Rubik', sans-serif;
+        color: var(--Grayish-Blue);
     }
 
     .send-field {

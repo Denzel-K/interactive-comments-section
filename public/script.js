@@ -31,7 +31,7 @@ window.onload = () => {
 
     const content = add_desktop.comment.value;
     const createdAt = new Date().toDateString();
-    const score = 0;
+    const count = 0;
     const user = {
       image: {
         png: "images/avatars/image-juliusomo.png",
@@ -43,7 +43,7 @@ window.onload = () => {
     try {
       const res = await fetch('/createComment', {
         method: 'POST',
-        body: JSON.stringify({ content, createdAt, score, user }),
+        body: JSON.stringify({ content, createdAt, count, user }),
         headers: { 'Content-Type': 'application/json' }
       })
 
@@ -65,7 +65,7 @@ window.onload = () => {
 
     const content = add_mobile.comment.value;
     const createdAt = new Date().toDateString();
-    const score = 0;
+    const count = 0;
     const user = {
       image: {
         png: "images/avatars/image-juliusomo.png",
@@ -79,7 +79,7 @@ window.onload = () => {
     try {
       const res = await fetch('/createComment', {
         method: 'POST',
-        body: JSON.stringify({ content, createdAt, score, user }),
+        body: JSON.stringify({ content, createdAt, count, user }),
         headers: { 'Content-Type': 'application/json' }
       })
 
@@ -96,145 +96,88 @@ window.onload = () => {
 
   })
 
-  //Make reply
-  const comment_reply_desktop = document.querySelector('#comment-reply-desktop');
-  const comment_reply_mobile = document.querySelector('#comment-reply-mobile');
-  const reply_reply_desktop = document.querySelector('#reply-reply-desktop');
-  const reply_reply_mobile = document.querySelector('#reply-reply-mobile');
+  //Make replies
+  const comment_reply_desktop = document.querySelectorAll('.comment-reply-desktop');
+  const comment_reply_mobile = document.querySelectorAll('.comment-reply-mobile');
+  const reply_reply_desktop = document.querySelectorAll('.reply-reply-desktop');
+  const reply_reply_mobile = document.querySelectorAll('.reply-reply-mobile');
 
-  comment_reply_desktop.addEventListener('submit', async (e)=> {
-    e.preventDefault();
+  const count = 0;
+  const createdAt = new Date().toDateString();
+  const user = {
+    image: {
+      png: "images/avatars/image-juliusomo.png",
+      webp: "images/avatars/image-juliusomo.webp"
+    },
+    username: "juliusomo"
+  }
 
-    const content = comment_reply_desktop.comment.value;
-    const createdAt = new Date().toDateString();
-    const score = 0;
-    const user = {
-      image: {
-        png: "images/avatars/image-juliusomo.png",
-        webp: "images/avatars/image-juliusomo.webp"
-      },
-      username: "juliusomo"
-    }
-    const replyingTo = comment_reply_desktop.replyingTo.value;
-
+  async function replyToComment(content, createdAt, count, user, replyingTo, route){
     try {
-      const res = await fetch('/createReply', {
+      const res = await fetch(route, {
         method: 'POST',
-        body: JSON.stringify({ content, createdAt, score, user, replyingTo }),
+        body: JSON.stringify({ content, createdAt, count, user, replyingTo }),
         headers: { 'Content-Type': 'application/json' }
       })
 
       const data = await res.json();
-      console.log (data);
+      //console.log (data);
 
-      if (data.reply) {
+      if (data.results) {
         location.assign('/');
       }
     }
     catch(err) {
       console.log (err);
     }
+  }
+
+  comment_reply_desktop.forEach(form => {
+    form.addEventListener('submit', async (e)=> {
+      e.preventDefault();
+
+      const content = form.comment.value;
+      const replyingTo = form.replyingTo.value;
+      const route = '/createReply';
+
+      replyToComment(content, createdAt, count, user, replyingTo, route);
+    })
   })
 
-  comment_reply_mobile.addEventListener('submit', async (e)=> {
-    e.preventDefault();
+  comment_reply_mobile.forEach(form => {
+    form.addEventListener('submit', async (e)=> {
+      e.preventDefault();
 
-    const content = comment_reply_mobile.comment.value;
-    const createdAt = new Date().toDateString();
-    const score = 0;
-    const user = {
-      image: {
-        png: "images/avatars/image-juliusomo.png",
-        webp: "images/avatars/image-juliusomo.webp"
-      },
-      username: "juliusomo"
-    }
-    const replyingTo = comment_reply_mobile.replyingTo.value;
+      const content = form.comment.value;
+      const replyingTo = form.replyingTo.value;
+      const route = '/createReply';
 
-    try {
-      const res = await fetch('/createReply', {
-        method: 'POST',
-        body: JSON.stringify({ content, createdAt, score, user, replyingTo }),
-        headers: { 'Content-Type': 'application/json' }
-      })
-
-      const data = await res.json();
-      console.log (data);
-
-      if (data.reply) {
-        location.assign('/');
-      }
-    }
-    catch(err) {
-      console.log (err);
-    }
+      replyToComment(content, createdAt, count, user, replyingTo, route);
+    })
   })
 
-  reply_reply_desktop.addEventListener('submit', async (e)=> {
-    e.preventDefault();
+  reply_reply_desktop.forEach(form => {
+    form.addEventListener('submit', async (e)=> {
+      e.preventDefault();
 
-    const content = reply_reply_desktop.comment.value;
-    const createdAt = new Date().toDateString();
-    const score = 0;
-    const user = {
-      image: {
-        png: "images/avatars/image-juliusomo.png",
-        webp: "images/avatars/image-juliusomo.webp"
-      },
-      username: "juliusomo"
-    }
-    const replyingTo = reply_reply_desktop.replyingTo.value;
+      const content = form.comment.value;
+      const replyingTo = form.replyingTo.value;
+      const route = '/replyToReply';
 
-    try {
-      const res = await fetch('/replyToReply', {
-        method: 'POST',
-        body: JSON.stringify({ content, createdAt, score, user, replyingTo }),
-        headers: { 'Content-Type': 'application/json' }
-      })
-
-      const data = await res.json();
-
-      if (data.repliesToReply) {
-        location.assign('/');
-      }
-    }
-    catch(err) {
-      console.log (err);
-    }
+      replyToComment(content, createdAt, count, user, replyingTo, route);
+    })
   })
 
-  reply_reply_mobile.addEventListener('submit', async (e)=> {
-    e.preventDefault();
+  reply_reply_mobile.forEach(form => {
+    form.addEventListener('submit', async (e)=> {
+      e.preventDefault();
 
-    const content = reply_reply_mobile.comment.value;
-    const createdAt = new Date().toDateString();
-    const score = 0;
-    const user = {
-      image: {
-        png: "images/avatars/image-juliusomo.png",
-        webp: "images/avatars/image-juliusomo.webp"
-      },
-      username: "juliusomo"
-    }
-    const replyingTo = reply_reply_mobile.replyingTo.value;
+      const content = form.comment.value;
+      const replyingTo = form.replyingTo.value;
+      const route = '/replyToReply';
 
-    try {
-      const res = await fetch('/replyToReply', {
-        method: 'POST',
-        body: JSON.stringify({ content, createdAt, score, user, replyingTo }),
-        headers: { 'Content-Type': 'application/json' }
-      })
-
-      const data = await res.json();
-      console.log (data);
-
-      if (data.repliesToReply) {
-        location.assign('/');
-      }
-    }
-    catch(err) {
-      console.log (err);
-    }
+      replyToComment(content, createdAt, count, user, replyingTo, route);
+    })
   })
 
   // Delete operations
@@ -355,14 +298,334 @@ window.onload = () => {
     })
   });
 
-  // document.querySelectorAll('.edit').forEach(edit_btn => {
-  //   edit_btn.onclick = (e)=> {
-  //     e.preventDefault();
-  //      // Find the corresponding reply-form-box
-  //     const contentBody = edit_btn.closest('.comment').querySelector('.reply-form-box');
 
-  //     // Toggle the visibility of the reply-form-box
-  //     replyFormBox.classList.toggle('hidden');
-  //   }
-  // })
+  //Update operations
+  document.querySelectorAll('.edit-comment').forEach(edit_btn => {
+    edit_btn.onclick = (e)=> {
+      e.preventDefault();
+
+      var contentData = edit_btn.closest('.comment-box').querySelector('.static-content').innerHTML;
+      var id = edit_btn.getAttribute('data-id');
+
+      const edit_form = `
+          <form class="update-comment" method="POST">
+            <div class="dynamic-content">
+              <textarea name="contentUpdate" class="update_txt">${contentData}</textarea>
+              <br>
+              <div class="update-hold">
+                <button type="submit" class="send-btn" id="update">
+                  UPDATE
+                </button>
+              </div>
+            </div>
+          </form>
+      `;
+
+      const contentBodies = edit_btn.closest('.comment-box').querySelectorAll('.content-body');
+      
+      contentBodies.forEach(contentBody => {
+        contentBody.innerHTML = edit_form;
+      })
+
+      const update_comment = document.querySelectorAll('.update-comment');        
+      update_comment.forEach(form => {
+        form.addEventListener('submit', async (event) => {
+
+          event.preventDefault();
+  
+          const contents = document.querySelectorAll('.update_txt');
+
+          var content;
+
+          contents.forEach(content_data => {
+            content = content_data.value;
+            console.log(content);
+
+            return content;
+          });
+
+          const createdAt = new Date().toDateString();
+          const score = 0;
+          const user = {
+            image: {
+              png: "images/avatars/image-juliusomo.png",
+              webp: "images/avatars/image-juliusomo.webp"
+            },
+            username: "juliusomo"
+          }
+  
+          try {
+            const res = await fetch(`/updateComment/${id}`, {
+              method: 'PUT',
+              body: JSON.stringify({ content, createdAt, score, user }),
+              headers: { 'Content-Type': 'application/json' }
+            })
+      
+            const data = await res.json();
+      
+            if (data.commentUpdate) {
+              location.reload();
+            }
+            else {
+              alert("ERROR !")
+            }
+          }
+          catch(err) {
+            console.log (err);
+          }
+        })
+      })
+      
+
+      edit_btn.onclick = (e)=> {
+        e.preventDefault();
+
+        contentBodies.forEach(contentBody => {
+          contentBody.innerHTML = contentData;
+          location.reload();
+        })
+      }
+    }
+  })
+
+  document.querySelectorAll('.edit-reply').forEach(edit_btn => {
+    edit_btn.onclick = (e)=> {
+      e.preventDefault();
+
+      var contentData = edit_btn.closest('.reply').querySelector('.static-content').innerHTML;
+      var id = edit_btn.getAttribute('data-id');
+      var reply_to = edit_btn.getAttribute('data-replyingTo');
+
+      const edit_form = `
+          <form class="update-reply" method="POST">
+            <div class="dynamic-content">
+              <textarea name="contentUpdate" class="update_txt">${contentData}</textarea>
+              <br>
+              <div class="update-hold">
+                <button type="submit" class="send-btn" id="update">
+                  UPDATE
+                </button>
+              </div>
+            </div>
+          </form>
+      `;
+
+      const contentBodies = edit_btn.closest('.reply').querySelectorAll('.content-body');
+      
+      contentBodies.forEach(contentBody => {
+        contentBody.innerHTML = edit_form;
+      })
+
+      const update_reply = document.querySelectorAll('.update-reply');        
+      update_reply.forEach(form => {
+        form.addEventListener('submit', async (event) => {
+
+          event.preventDefault();
+  
+          const contents = document.querySelectorAll('.update_txt');
+
+          var content;
+
+          contents.forEach(content_data => {
+            content = content_data.value;
+            console.log(content);
+
+            return content;
+          });
+
+          const createdAt = new Date().toDateString();
+          const score = 0;
+          const replyingTo = reply_to;
+          const user = {
+            image: {
+              png: "images/avatars/image-juliusomo.png",
+              webp: "images/avatars/image-juliusomo.webp"
+            },
+            username: "juliusomo"
+          }
+  
+          try {
+            const res = await fetch(`/updateReply/${id}`, {
+              method: 'PUT',
+              body: JSON.stringify({ content, createdAt, score, user, replyingTo }),
+              headers: { 'Content-Type': 'application/json' }
+            })
+      
+            const data = await res.json();
+      
+            if (data.replyUpdate) {
+              location.reload();
+            }
+            else {
+              alert("ERROR !")
+            }
+          }
+          catch(err) {
+            console.log (err);
+          }
+        })
+      })
+      
+
+      edit_btn.onclick = (e)=> {
+        e.preventDefault();
+
+        contentBodies.forEach(contentBody => {
+          contentBody.innerHTML = contentData;
+          location.reload();
+        })
+      }
+    }
+  })
+
+  document.querySelectorAll('.edit-subreply').forEach(edit_btn => {
+    edit_btn.onclick = (e)=> {
+      e.preventDefault();
+
+      var contentData = edit_btn.closest('.reply').querySelector('.static-content').innerHTML;
+      var id = edit_btn.getAttribute('data-id');
+      var reply_to = edit_btn.getAttribute('data-replyingTo');
+
+      const edit_form = `
+          <form class="update-reply" method="POST">
+            <div class="dynamic-content">
+              <textarea name="contentUpdate" class="update_txt">${contentData}</textarea>
+              <br>
+              <div class="update-hold">
+                <button type="submit" class="send-btn" id="update">
+                  UPDATE
+                </button>
+              </div>
+            </div>
+          </form>
+      `;
+
+      const contentBodies = edit_btn.closest('.reply').querySelectorAll('.content-body');
+      
+      contentBodies.forEach(contentBody => {
+        contentBody.innerHTML = edit_form;
+      })
+
+      const update_reply = document.querySelectorAll('.update-reply');        
+      update_reply.forEach(form => {
+        form.addEventListener('submit', async (event) => {
+
+          event.preventDefault();
+  
+          const contents = document.querySelectorAll('.update_txt');
+
+          var content;
+
+          contents.forEach(content_data => {
+            content = content_data.value;
+            console.log(content);
+
+            return content;
+          });
+
+          const createdAt = new Date().toDateString();
+          const score = 0;
+          const replyingTo = reply_to;
+          const user = {
+            image: {
+              png: "images/avatars/image-juliusomo.png",
+              webp: "images/avatars/image-juliusomo.webp"
+            },
+            username: "juliusomo"
+          }
+  
+          try {
+            const res = await fetch(`/updateSubReply/${id}`, {
+              method: 'PUT',
+              body: JSON.stringify({ content, createdAt, score, user, replyingTo }),
+              headers: { 'Content-Type': 'application/json' }
+            })
+      
+            const data = await res.json();
+      
+            if (data.replyUpdate) {
+              location.reload();
+            }
+            else {
+              alert("ERROR !")
+            }
+          }
+          catch(err) {
+            console.log (err);
+          }
+        })
+      })
+      
+
+      edit_btn.onclick = (e)=> {
+        e.preventDefault();
+
+        contentBodies.forEach(contentBody => {
+          contentBody.innerHTML = contentData;
+          location.reload();
+        })
+      }
+    }
+  })
+
+  //Score increment and decrement
+  const increment = document.querySelectorAll('.plus');
+  const decrement = document.querySelectorAll('.minus');
+
+  // Function to disable button
+  function disableButton(button) {
+    button.disabled = true;
+  }
+
+  // Function to enable button
+  function enableButton(button) {
+    button.disabled = false;
+  }
+
+  function incrementCounter(currentCount, route) {
+    let currentValue = parseInt(currentCount.textContent);
+    currentCount.textContent = currentValue + 1;
+    const currentVal = currentCount.textContent;
+
+    updateCounter(currentVal, route);
+  }
+
+  function decrementCounter(currentCount, route) {
+    let currentValue = parseInt(currentCount.textContent);
+    currentCount.textContent = currentValue - 1;
+    const currentVal = currentCount.textContent;
+
+    updateCounter(currentVal, route);
+  }
+
+  async function updateCounter(currentVal, route){
+    try {
+      const res = await fetch(route, {
+        method: 'PUT',
+        body: JSON.stringify({ currentVal }),
+        headers: { 'Content-Type': 'application/json' }
+      })
+    }
+    catch(err){
+      console.log(err);
+    }
+  }
+
+  increment.forEach(plus => {
+    plus.addEventListener('click', ()=> {
+      const currentCount = plus.closest('.count').querySelector('.count-value');
+      const route = plus.closest('.count').getAttribute('data-route');
+
+      incrementCounter(currentCount, route);
+    })
+  })
+
+  decrement.forEach(minus => {
+    minus.addEventListener('click', ()=> {
+      const currentCount = minus.closest('.count').querySelector('.count-value');
+      const route = minus.closest('.count').getAttribute('data-route');
+
+      decrementCounter(currentCount, route);
+    })
+  })
 }

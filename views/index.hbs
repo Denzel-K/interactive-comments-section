@@ -6,10 +6,10 @@
           <div class="comment-box">
             <div class="comment">
               <div class="desktop-box">
-                <div class="count desktop-count">
-                  <img src="images/icon-plus.svg" alt="plus">
-                  <span>{{score}}</span>
-                  <img src="images/icon-minus.svg" alt="plus">
+                <div class="count desktop-count" data-route="/commentCount/{{_id}}">
+                  <img src="images/icon-plus.svg" alt="plus" class="plus">
+                  <span class="count-value">{{count}}</span>
+                  <img src="images/icon-minus.svg" alt="minus" class="minus">
                 </div>
                 
                 <div class="content">
@@ -39,7 +39,7 @@
                             <span class="delete-txt">Delete</span>
                           </a>
 
-                          <a class="reply-btn edit" href="#">
+                          <a class="reply-btn edit-comment" href="#" data-id={{_id}}>
                             <span>
                               <img src="images/icon-edit.svg" alt="reply">
                             </span>
@@ -59,14 +59,7 @@
                   </div>
 
                   <div class="content-body">
-                    <div class="static-content">
-                      {{ content}}
-                    </div>
-                    {{!-- <form>
-                      <div class="dynamic-content">
-                        {{ content}}
-                      </div>
-                    </form> --}}
+                    <div class="static-content">{{content}}</div>
                   </div>
                 </div>
               </div>
@@ -89,15 +82,15 @@
                   </div>
 
                   <div class="content-body">
-                    {{ content}}
+                    <div class="static-content">{{content}}</div>
                   </div>
                 </div>
 
                 <div class="rate-n-reply">
-                  <div class="count mobile-count">
-                    <img src="images/icon-plus.svg" alt="plus">
-                    <span>{{ score}}</span>
-                    <img src="images/icon-minus.svg" alt="plus">
+                  <div class="count mobile-count" data-route="/commentCount/{{_id}}">
+                    <img src="images/icon-plus.svg" alt="plus" class="plus">
+                    <span class="count-value">{{count}}</span>
+                    <img src="images/icon-minus.svg" alt="minus" class="minus">
                   </div>
                   
                   <div class="action-box">
@@ -110,7 +103,7 @@
                       <span class="delete-txt">Delete</span>
                     </a>
 
-                    <a class="reply-btn edit" href="#">
+                    <a class="reply-btn edit-comment" href="#" data-id={{_id}}>
                       <span>
                         <img src="images/icon-edit.svg" alt="reply">
                       </span>
@@ -132,7 +125,7 @@
             </div>
 
             <div class="reply-form-box hidden">
-              <form id="comment-reply-desktop" class="reply-forms">
+              <form class="reply-forms comment-reply-desktop">
                 <div class="add-desktop">
                   <input type="hidden" value="{{this.user.username}}" name="replyingTo">
                   <span>
@@ -149,7 +142,7 @@
                 </div>
               </form>
 
-              <form id="comment-reply-mobile" class="reply-forms">
+              <form class="reply-forms comment-reply-mobile">
                 <div class="add-mobile">
                     <input type="hidden" value="{{this.user.username}}" name="replyingTo">
 
@@ -173,10 +166,10 @@
             <div class="reply-flex">
               <div class="reply">
                 <div class="desktop-box">
-                    <div class="count desktop-count">
-                      <img src="images/icon-plus.svg" alt="plus">
-                      <span>{{count}}</span>
-                      <img src="images/icon-minus.svg" alt="plus">
+                    <div class="count desktop-count" data-route="/replyCount/{{_id}}">
+                      <img src="images/icon-plus.svg" alt="plus" class="plus">
+                      <span class="count-value">{{count}}</span>
+                      <img src="images/icon-minus.svg" alt="minus" class="minus">
                     </div>
 
                     <div class="content">
@@ -206,7 +199,7 @@
                             <span class="delete-txt">Delete</span>
                           </a>
 
-                          <a class="reply-btn" href="#">
+                          <a class="reply-btn edit-reply" href="#" data-replyingTo={{this.replyingTo}} data-id = {{_id}}>
                             <span>
                               <img src="images/icon-edit.svg" alt="reply">
                             </span>
@@ -226,7 +219,8 @@
                       </div>
 
                       <div class="content-body">
-                        <span class="replyingTo">@{{this.replyingTo}} </span>{{ content}}
+                        <span class="replyingTo">@{{this.replyingTo}} </span>
+                        <span class="static-content">{{content}}</span>
                       </div>
                     </div>
                   </div>
@@ -249,15 +243,16 @@
                       </div>
 
                       <div class="content-body">
-                        <span class="replyingTo">@{{ this.replyingTo}} </span>{{ content}}
+                        <span class="replyingTo">@{{ this.replyingTo}} </span>
+                        <span class="static-content">{{content}}</span>
                       </div>
                     </div>
 
                     <div class="rate-n-reply">
-                      <div class="count mobile-count">
-                        <img src="images/icon-plus.svg" alt="plus">
-                        <span>{{ this.count}}</span>
-                        <img src="images/icon-minus.svg" alt="plus">
+                      <div class="count mobile-count" data-route="/replyCount/{{_id}}">
+                        <img src="images/icon-plus.svg" alt="plus" class="plus">
+                        <span class="count-value">{{ this.count}}</span>
+                        <img src="images/icon-minus.svg" alt="minus" class="minus">
                       </div>
 
                       <div class="action-box">
@@ -270,7 +265,7 @@
                           <span class="delete-txt">Delete</span>
                         </a>
 
-                        <a class="reply-btn" href="#">
+                        <a class="reply-btn edit-reply" href="#" data-replyingTo={{this.replyingTo}} data-id = {{_id}}>
                           <span>
                             <img src="images/icon-edit.svg" alt="reply">
                           </span>
@@ -292,7 +287,7 @@
               </div>
 
               <div class="reply-form-box reply-reply-field hidden">
-                <form id="reply-reply-desktop" class="reply-forms">
+                <form class="reply-forms reply-reply-desktop">
                   <div class="add-desktop">
                     <input type="hidden" value="{{this.user.username}}" name="replyingTo">
 
@@ -310,7 +305,7 @@
                   </div>
                 </form>
 
-                <form id="reply-reply-mobile" class="reply-forms">
+                <form class="reply-forms reply-reply-mobile">
                   <div class="add-mobile">
                       <input type="hidden" value="{{this.user.username}}" name="replyingTo">
 
@@ -332,10 +327,10 @@
                   {{#each repliesToReply}}
                     <div class="reply">
                       <div class="desktop-box">
-                        <div class="count desktop-count">
-                          <img src="images/icon-plus.svg" alt="plus">
-                          <span>{{count}}</span>
-                          <img src="images/icon-minus.svg" alt="plus">
+                        <div class="count desktop-count" data-route="/subreplyCount/{{_id}}">
+                          <img src="images/icon-plus.svg" alt="plus" class="plus">
+                          <span class="count-value">{{count}}</span>
+                          <img src="images/icon-minus.svg" alt="minus" class="minus">
                         </div>
 
                         <div class="content">
@@ -362,7 +357,7 @@
                                 <span class="delete-txt">Delete</span>
                               </a>
 
-                              <a class="reply-btn" href="#">
+                              <a class="reply-btn edit-subreply" href="#" data-replyingTo={{this.replyingTo}} data-id={{_id}}>
                                 <span>
                                   <img src="images/icon-edit.svg" alt="reply">
                                 </span>
@@ -372,8 +367,8 @@
                           </div>
 
                           <div class="content-body">
-                            <span class="replyingTo">@{{this.replyingTo}} </span>{{ content}}
-                          </div>
+                            <span class="replyingTo">@{{this.replyingTo}} </span>
+                            <span class="static-content">{{content}}</span>                          </div>
                         </div>
                       </div>
 
@@ -393,15 +388,16 @@
                           </div>
 
                           <div class="content-body">
-                            <span class="replyingTo">@{{ this.replyingTo}} </span>{{ content}}
+                            <span class="replyingTo">@{{this.replyingTo}} </span>
+                            <span class="static-content">{{content}}</span>
                           </div>
                         </div>
 
                         <div class="rate-n-reply">
-                          <div class="count mobile-count">
-                            <img src="images/icon-plus.svg" alt="plus">
-                            <span>{{ this.count}}</span>
-                            <img src="images/icon-minus.svg" alt="plus">
+                          <div class="count mobile-count" data-route="/subreplyCount/{{_id}}">
+                            <img src="images/icon-plus.svg" alt="plus" class="plus">
+                            <span class="count-value">{{ this.count}}</span>
+                            <img src="images/icon-minus.svg" alt="minus" class="minus">
                           </div>
 
                           <div class="action-box">
@@ -413,7 +409,7 @@
                               <span class="delete-txt">Delete</span>
                             </a>
 
-                            <a class="reply-btn" href="#">
+                            <a class="reply-btn edit-subreply" href="#" data-replyingTo={{this.replyingTo}} data-id={{_id}}>
                               <span>
                                 <img src="images/icon-edit.svg" alt="reply">
                               </span>
@@ -497,9 +493,6 @@
           <button type="button" class="delete-subreply btn">YES, DELETE</button>
         </div>
       </dialog>
-
-
-
     </div>
 </main>
 
