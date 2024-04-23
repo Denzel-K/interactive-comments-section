@@ -269,8 +269,14 @@ textarea {
     justify-content: end;
     margin-top: 1rem;
 }
-.get-reply:hover .reply-txt {
-    color: h;
+.get-reply:hover .reply-txt, .get-reply-reply:hover .reply-txt, .edit-btn:hover .reply-txt {
+    color: var(--Light-grayish-blue);
+}
+.delete-btn:hover .delete-txt {
+    color: var(--Pale-red);
+}
+.plus:hover, .minus:hover{
+    cursor: pointer;
 }
 .hidden {
     display: none;

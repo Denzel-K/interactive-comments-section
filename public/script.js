@@ -300,6 +300,20 @@ window.onload = () => {
 
 
   //Update operations
+  // const edit_form = `
+  //         <form class="update-comment" method="POST">
+  //           <div class="dynamic-content">
+  //             <textarea name="contentUpdate" class="update_txt">${contentData}</textarea>
+  //             <br>
+  //             <div class="update-hold">
+  //               <button type="submit" class="send-btn" id="update">
+  //                 UPDATE
+  //               </button>
+  //             </div>
+  //           </div>
+  //         </form>
+  //     `;
+
   document.querySelectorAll('.edit-comment').forEach(edit_btn => {
     edit_btn.onclick = (e)=> {
       e.preventDefault();
@@ -308,19 +322,18 @@ window.onload = () => {
       var id = edit_btn.getAttribute('data-id');
 
       const edit_form = `
-          <form class="update-comment" method="POST">
-            <div class="dynamic-content">
-              <textarea name="contentUpdate" class="update_txt">${contentData}</textarea>
-              <br>
-              <div class="update-hold">
-                <button type="submit" class="send-btn" id="update">
-                  UPDATE
-                </button>
-              </div>
-            </div>
-          </form>
-      `;
-
+      <form class="update-comment" method="POST">
+        <div class="dynamic-content">
+          <textarea name="contentUpdate" class="update_txt">${contentData}</textarea>
+          <br>
+          <div class="update-hold">
+            <button type="submit" class="send-btn" id="update">
+              UPDATE
+            </button>
+          </div>
+        </div>
+      </form>
+  `;
       const contentBodies = edit_btn.closest('.comment-box').querySelectorAll('.content-body');
       
       contentBodies.forEach(contentBody => {
@@ -345,7 +358,6 @@ window.onload = () => {
           });
 
           const createdAt = new Date().toDateString();
-          const score = 0;
           const user = {
             image: {
               png: "images/avatars/image-juliusomo.png",
@@ -357,7 +369,7 @@ window.onload = () => {
           try {
             const res = await fetch(`/updateComment/${id}`, {
               method: 'PUT',
-              body: JSON.stringify({ content, createdAt, score, user }),
+              body: JSON.stringify({ content, createdAt, user }),
               headers: { 'Content-Type': 'application/json' }
             })
       

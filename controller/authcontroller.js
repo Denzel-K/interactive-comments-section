@@ -129,14 +129,13 @@ module.exports.deleteSubReply = async (req, res) => {
 }
 
 module.exports.updateComment = async (req, res) => {
-    const { content, createdAt, score, user } = req.body;
+    const { content, createdAt, user } = req.body;
     const id = req.params.id;
     
     try {
         const commentUpdate = await Comment.findByIdAndUpdate(id, {
             content,
             createdAt,
-            score,
             user
         },
         {useFindAndModify: false});
@@ -152,14 +151,14 @@ module.exports.updateComment = async (req, res) => {
 }
 
 module.exports.updateReply = async (req, res) => {
-    const { content, createdAt, score, user, replyingTo } = req.body;
+    const { content, createdAt, count, user, replyingTo } = req.body;
     const id = req.params.id;
     
     try {
         const replyUpdate = await Reply.findByIdAndUpdate(id, {
             content,
             createdAt,
-            score,
+            count,
             user,
             replyingTo
         },
@@ -176,14 +175,14 @@ module.exports.updateReply = async (req, res) => {
 }
 
 module.exports.updateSubReply = async (req, res) => {
-    const { content, createdAt, score, user, replyingTo } = req.body;
+    const { content, createdAt, count, user, replyingTo } = req.body;
     const id = req.params.id;
     
     try {
         const replyUpdate = await ReplyToReply.findByIdAndUpdate(id, {
             content,
             createdAt,
-            score,
+            count,
             user,
             replyingTo
         },
