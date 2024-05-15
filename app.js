@@ -40,7 +40,7 @@ app.use(authRoutes);
 app.use(express.json());
 
 
-//Database connection and starting server
+//Database and Server connection
 mongoose.connect(process.env.DB_URI)
     .then((result) => {
       //Start server
